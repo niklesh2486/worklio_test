@@ -15,6 +15,15 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
+<style lang="scss">
+@import "../sass/_color.scss";
+    .add-btn{
+        position: absolute;
+        top: 1px;
+        right: 0px;
+        padding: 3px 8px 0 8px;
+        line-height: 17px;
+        cursor: pointer;
+        background-color: $cyan-blue;
+    }
 </style>

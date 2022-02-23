@@ -107,6 +107,25 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss">
+.container{
+    margin: 0 auto;
+    max-width: 1170px;
+    padding: 0 15px;
+    margin-top: 30px;
+    height: 90vh;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+    .left-container{
+        width: 70%;
+        float: left;
+    }
+    .right-container{
+        width: 30%;
+        float: right;
+        margin-top: 90px;
+        padding: 0 50px;
+    }
 
+}
 </style>

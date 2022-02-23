@@ -22,6 +22,17 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
+<style lang="scss">
+@import "../sass/_color.scss";
+    .radio-outer{
+        padding: 10px 30px;
+        cursor: pointer;
+        border-bottom: 1px solid $lightgrey;
+        label{
+            cursor: pointer;
+        }
+        input[type="radio"]{
+            cursor: pointer;
+        }
+    }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table border="">
+        <table border="0" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
                     <th>#</th>
@@ -103,6 +103,47 @@ export default defineComponent({
 });
 </script>
 
-<style>
-
+<style lang="scss">
+@import "../sass/_color.scss";
+    table{
+        width: 100%;
+        border: 0;
+        thead{
+            th{
+                padding: 8px;
+                background-color: $cyan-blue;
+                border: 0;
+                text-align: left;
+                &:nth-child(1){
+                    width: 75px;
+                }
+                &:nth-child{
+                    width: 75px;
+                }
+            }
+        }
+        tbody{
+            tr{
+                &:hover{
+                   img.trash{
+                       display: block;
+                   } 
+                }
+                td{
+                    padding: 15px 8px;
+                    background-color: $white;
+                    border-bottom: 1px solid lightgrey;
+                    img.trash{
+                        cursor: pointer;
+                        display: none;
+                    }
+                }
+                td.error{
+                    background-color: $not-found;
+                    color: $warning;
+                    text-align: center;
+                }
+            }
+        }
+    }
 </style>

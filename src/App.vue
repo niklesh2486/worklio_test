@@ -15,11 +15,14 @@ export default defineComponent({
   },
   setup() {
     // Setup
-    
+
   },
 });
 </script>
 
 <style lang="scss" module>
 // Style
+body{
+  overflow: hidden;
+}
 </style>
