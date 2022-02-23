@@ -17,12 +17,14 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 // import SearchBar from './SearchBar.vue';
 import ItemsList from './ItemsList.vue';
 // import Sort from './Sort.vue';
 
-export default {
+
+
+export default defineComponent({
     name: 'MainPage',
     components: {
         // SearchBar,
@@ -30,9 +32,22 @@ export default {
         // Sort,
     },
     setup() {
-        return;
+        const listItems = ref([
+            { item_name: 'Sun', created_at: new Date() },
+            { item_name: 'Moon', created_at: new Date() },
+            { item_name: 'Star', created_at: new Date() },
+        ]);
+        return {
+            listItems,
+        }
     },
-}
+    created() {
+        if(!localStorage.getItem('setItem')){
+            window.localStorage.setItem('setItem', JSON.stringify(this.listItems) );
+        }
+        
+    },
+});
 </script>
 
 <style>

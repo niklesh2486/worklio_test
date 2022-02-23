@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table>
+        <table border="">
             <thead>
                 <tr>
                     <th>#</th>
@@ -10,11 +10,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Name</td>
-                    <td>TIme</td>
-                    <td>action</td>
+                <tr v-for="(listItem, index) in listItems" :key="index">
+                    <td>{{ index+1 }}</td>
+                    <td>{{ listItem.item_name }}</td>
+                    <td>{{ getFormat(listItem.created_at) }}</td>
+                    <td>
+                        <Trash 
+                            :item-name="listItem.item_name"
+                            @deleteNode="deleteNode"
+                        />
+                        </td>
                 </tr>
             </tbody>
         </table>
@@ -22,13 +27,39 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-export default {
+import { defineComponent, ref } from 'vue';
+import { formatDistance } from 'date-fns'
+import Trash from './Trash.vue';
+
+export default defineComponent({
     name: 'ItemsList',
-    setup() {
-        return;
+    components: {
+        Trash,
     },
-}
+    setup() {
+        let listItems = ref([]);
+        return {
+            listItems,
+        }
+    },
+    methods: {
+        getListItems() {
+            let items = JSON.parse(localStorage.getItem('setItem'));
+            this.listItems = items;
+        },
+        getFormat(date) {
+            return formatDistance( new Date(date),new Date(),{ addSuffix: true });
+        },
+        deleteNode(val) {
+            let filtered = this.listItems.filter(item => item.item_name !== val);
+            window.localStorage.setItem('setItem', JSON.stringify(filtered) );
+            this.listItems = filtered;
+        }
+    },
+    mounted() {
+        this.getListItems();
+    },
+});
 </script>
 
 <style>

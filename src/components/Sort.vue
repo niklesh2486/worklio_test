@@ -4,12 +4,12 @@
 
 <script>
 import { defineComponent } from 'vue';
-export default {
+export default defineComponent({
     name: 'Sort',
     setup() {
         return;
     },
-}
+});
 </script>
 
 <style>

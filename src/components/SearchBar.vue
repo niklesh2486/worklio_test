@@ -4,13 +4,13 @@
 
 <script>
 import { defineComponent } from 'vue';
-export default {
+export default defineComponent({
     name: 'SearchBar',
     setup() {
         return;
     },
 
-}
+});
 </script>
 
 <style>
