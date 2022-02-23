@@ -10,16 +10,26 @@
                 </tr>
             </thead>
             <tbody>
+                <tr v-if="(listItems.length) == 0">
+                    <td colspan="4" class="error">
+                        No Items Found
+                    </td>
+                </tr>
                 <tr v-for="(listItem, index) in listItems" :key="index">
                     <td>{{ index+1 }}</td>
-                    <td>{{ listItem.item_name }}</td>
-                    <td>{{ getFormat(listItem.created_at) }}</td>
+                    <td>
+                        {{ listItem.item_name }}
+                        <Check v-if="matchString(searchString, listItem.item_name)"/>
+                    </td>
+                    <td>
+                        {{ getFormat(listItem.created_at) }}
+                    </td>
                     <td>
                         <Trash 
                             :item-name="listItem.item_name"
                             @deleteNode="deleteNode"
                         />
-                        </td>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -30,21 +40,35 @@
 import { defineComponent, ref } from 'vue';
 import { formatDistance } from 'date-fns'
 import Trash from './Trash.vue';
+import Check from './Check.vue';
+import _ from "lodash";
 
 export default defineComponent({
     name: 'ItemsList',
+    props: {
+        searchString: String,
+    },
     components: {
         Trash,
+        Check,
     },
     setup() {
         let listItems = ref([]);
+        let sortBy = ref('item_name');
+
         return {
             listItems,
+            sortBy,
         }
     },
     methods: {
-        getListItems() {
+        getListItems(sortby = null) {
+            if(sortby)
+            {
+                this.sortBy = sortby;
+            }
             let items = JSON.parse(localStorage.getItem('setItem'));
+            this.sortItems(items, this.sortBy);
             this.listItems = items;
         },
         getFormat(date) {
@@ -57,7 +81,21 @@ export default defineComponent({
         },
         sortedList(filterData){
             this.listItems = filterData;
-        }
+        },
+        matchString(a, b){
+            if(_.lowerCase(a) == _.lowerCase(b)){
+                return true;
+            }
+            return false;
+        },
+        sortItems(items, sortby) {
+            items.sort(function(a,b){
+                if(sortby == 'item_name')
+                    return a.item_name.localeCompare(b.item_name);
+                else
+                    return new Date(b.created_at) - new Date(a.created_at);
+            });
+        },
     },
     mounted() {
         this.getListItems();

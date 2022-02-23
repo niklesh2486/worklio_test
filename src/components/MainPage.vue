@@ -13,12 +13,15 @@
             <div class="list-conainer">
                 <ItemsList 
                     ref="ItemsList"
+                    :search-string="searchString"
                 />
             </div>
         </div>
         <div class="right-container">
             <div class="sort-conainer">
-                <!-- <Sort /> -->
+                <Sort
+                    @sort="callSortItems"
+                />
             </div>
         </div>
     </div>
@@ -28,7 +31,7 @@
 import { defineComponent, ref } from 'vue';
 import SearchBar from './SearchBar.vue';
 import ItemsList from './ItemsList.vue';
-// import Sort from './Sort.vue';
+import Sort from './Sort.vue';
 
 import _ from "lodash";
 
@@ -39,7 +42,7 @@ export default defineComponent({
     components: {
         SearchBar,
         ItemsList,
-        // Sort,
+        Sort,
     },
     setup() {
         let searchString = ref(null);
@@ -65,6 +68,7 @@ export default defineComponent({
                 items.push({ item_name: input.value, created_at: new Date() });
                 localStorage.setItem('setItem', JSON.stringify(items) );
                 input.value = '';
+                this.searchString = null;
                 this.$refs.ItemsList.getListItems();
             }
         },
@@ -89,6 +93,9 @@ export default defineComponent({
             this.searchString = null;
             this.addButton = false;
             this.$refs.ItemsList.getListItems();
+        },
+        callSortItems(event) {
+            this.$refs.ItemsList.getListItems(event.target.value);
         }
     },
     created() {

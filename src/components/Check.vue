@@ -1,6 +1,6 @@
 <template>
     <span>
-        <img class="trash" src="../assets/trash.svg" @click="$emit('deleteNode', itemName)" />
+        <img class="check" src="../assets/check.svg" />
     </span>
 </template>
 
@@ -8,12 +8,12 @@
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-    name: 'Trash',
+    name: 'Check',
     props: {
         itemName: String,
     },
-    setup() {
-        return {   
+    setup() {  
+        return {    
         }
     },
 });
