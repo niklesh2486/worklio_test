@@ -1,8 +1,14 @@
-# List
 
-Create a list application from the provided design file [list.xd](list.xd) (can
-be opened in [Adobe XD](https://www.adobe.com/products/xd.html)) or available
-[here](https://xd.adobe.com/view/3859fb2f-c300-4d3e-8e50-23a085a7ad2c-6d0a/specs/).
+# WorkLio Test task
+
+Using localstorage manage list
+
+## Authors
+
+- [nraut@deqode.com](https://bitbucket.org/nrautdeqode/worklio/src/master/)
+
+
+
 
 ## Project setup
 
@@ -13,18 +19,10 @@ be opened in [Adobe XD](https://www.adobe.com/products/xd.html)) or available
 ```bash
 # install
 npm ci
-# serve with hot-reload for development
+# 
 npm run serve
 ```
 
-Tips for VSCode extensions.
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  for common mistakes
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-  for code formatting
-- [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
-  for vue support
 
 ## Libraries
 
