@@ -2,10 +2,12 @@
     <div class="container">
         <div class="left-container">
             <div class="searchbar-conainer">
-                <!-- <SearchBar /> -->
+                <SearchBar @addItemsList="addItems" />
             </div>
             <div class="list-conainer">
-                <ItemsList />
+                <ItemsList 
+                    ref="ItemsList"
+                />
             </div>
         </div>
         <div class="right-container">
@@ -18,7 +20,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
-// import SearchBar from './SearchBar.vue';
+import SearchBar from './SearchBar.vue';
 import ItemsList from './ItemsList.vue';
 // import Sort from './Sort.vue';
 
@@ -27,7 +29,7 @@ import ItemsList from './ItemsList.vue';
 export default defineComponent({
     name: 'MainPage',
     components: {
-        // SearchBar,
+        SearchBar,
         ItemsList,
         // Sort,
     },
@@ -39,6 +41,18 @@ export default defineComponent({
         ]);
         return {
             listItems,
+        }
+    },
+    methods: {
+        addItems(){
+            let input = document.querySelector('.add-search-input');
+            if(input.value.length){
+                let items = JSON.parse(localStorage.getItem('setItem'));
+                items.push({ item_name: input.value, created_at: new Date() });
+                localStorage.setItem('setItem', JSON.stringify(items) );
+                input.value = '';
+                this.$refs.ItemsList.getListItems();
+            }
         }
     },
     created() {
