@@ -54,6 +54,9 @@ export default defineComponent({
             let filtered = this.listItems.filter(item => item.item_name !== val);
             window.localStorage.setItem('setItem', JSON.stringify(filtered) );
             this.listItems = filtered;
+        },
+        sortedList(filterData){
+            this.listItems = filterData;
         }
     },
     mounted() {

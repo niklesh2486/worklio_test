@@ -1,7 +1,19 @@
 <template>
     <div class="search-bar">
-        <input type="text" class="add-search-input"/>
-        <AddButton @handleAdd="handleAdd" />
+        <input 
+            type="text" 
+            class="add-search-input"
+            @keydown.esc="clearInput()"
+            @keydown.enter="handleAdd()"
+            v-model="filterValue"
+            @input="$emit('filterList', filterValue)"
+        />
+        <AddButton 
+            v-if="searchString"
+            @handleAdd="handleAdd"
+            :class="[addButton ? 'btn-disable' : '']"
+            :disabled="addButton"
+        />
     </div>
 </template>
 
@@ -11,15 +23,31 @@ import AddButton from './AddButton.vue';
 
 export default defineComponent({
     name: 'SearchBar',
+    props: {
+        addButton: Boolean,
+        searchString: String,
+    },
+    emits: ['filterList'],
     components: {
         AddButton,
     },
     setup() {
-        return;
+        let filterValue;
+        return{
+            filterValue,
+        }
     },
     methods: {
         handleAdd(){
-            this.$emit('addItemsList');
+            if(!this.addButton){
+                this.filterValue ='';
+                this.$emit('addItemsList');
+            }            
+        },
+        clearInput(){
+            document.querySelector('.add-search-input').value = '';
+            this.filterValue ='';
+            this.$emit('resetList');
         }
     }
 

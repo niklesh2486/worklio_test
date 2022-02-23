@@ -2,7 +2,13 @@
     <div class="container">
         <div class="left-container">
             <div class="searchbar-conainer">
-                <SearchBar @addItemsList="addItems" />
+                <SearchBar 
+                    @addItemsList="addItems"
+                    @filter-list="filterList"
+                    :add-button="addButton"
+                    :search-string="searchString"
+                    @reset-list="resetList"
+                />
             </div>
             <div class="list-conainer">
                 <ItemsList 
@@ -24,6 +30,8 @@ import SearchBar from './SearchBar.vue';
 import ItemsList from './ItemsList.vue';
 // import Sort from './Sort.vue';
 
+import _ from "lodash";
+
 
 
 export default defineComponent({
@@ -34,6 +42,9 @@ export default defineComponent({
         // Sort,
     },
     setup() {
+        let searchString = ref(null);
+        let filter = ref(null);
+        let addButton = ref(false);
         const listItems = ref([
             { item_name: 'Sun', created_at: new Date() },
             { item_name: 'Moon', created_at: new Date() },
@@ -41,6 +52,9 @@ export default defineComponent({
         ]);
         return {
             listItems,
+            searchString,
+            filter,
+            addButton,
         }
     },
     methods: {
@@ -53,6 +67,28 @@ export default defineComponent({
                 input.value = '';
                 this.$refs.ItemsList.getListItems();
             }
+        },
+        filterList(value) {
+            this.searchString = value;
+            let items = JSON.parse(localStorage.getItem('setItem'));
+            this.filter = items.filter(item => _.lowerCase(item.item_name).includes(_.lowerCase(value)));
+            if(this.filter){
+                let match = this.filter.find(item => _.lowerCase(item.item_name) == (_.lowerCase(value)));
+                this.$refs.ItemsList.sortedList(this.filter);
+                if(match){
+                    this.addButton = true;
+                }
+                else
+                {
+                    this.addButton = false;
+                }
+            }
+        },
+        resetList(){
+            this.filter = null;
+            this.searchString = null;
+            this.addButton = false;
+            this.$refs.ItemsList.getListItems();
         }
     },
     created() {
